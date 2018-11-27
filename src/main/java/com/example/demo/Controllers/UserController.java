@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.Event;
+import com.example.demo.Models.Kitchen;
 import com.example.demo.Models.User;
 import com.example.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,10 @@ public class UserController {
 
     //INDEX
     @GetMapping("/")
-    public String index(){
+    public String index(Model model){
         log.info("Index action called...");
 
+        model.addAttribute("events", userService.getEvents());
         return INDEX;
     }
 
@@ -79,6 +81,9 @@ public class UserController {
     @GetMapping("/event")
     public String event(Model model){
         log.info("See event action called..");
+
+        List<Kitchen> k = userService.getKitchens();
+        model.addAttribute("kitchens", k);
 
         List<Event> e = userService.getEvents();
         model.addAttribute("events", e);

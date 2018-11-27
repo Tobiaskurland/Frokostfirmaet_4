@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Event editEvent(int id) {
+    public Event editEvent(int id, Event event) {
 
-        return userRepo.editEvent(id);
+        return userRepo.editEvent(id, event);
     }
 
     @Override
@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Kitchen editKitchen(int id) {
+    public Kitchen editKitchen(int id, Kitchen kitchen) {
 
-        return userRepo.editKitchen(id);
+        return userRepo.editKitchen(id, kitchen);
     }
 
     @Override
@@ -102,9 +102,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Judge editJudge(int id) {
+    public Judge editJudge(int id, Judge judge) {
 
-        return userRepo.editJudge(id);
+        return userRepo.editJudge(id, judge);
     }
 
     @Override

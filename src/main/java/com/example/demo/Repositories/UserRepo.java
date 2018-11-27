@@ -15,21 +15,21 @@ public interface UserRepo {
     java.util.List<Event> getEvents();
     Event addEvent(Event event);
     Event readEvent(int id);
-    Event editEvent(int id);
+    Event editEvent(int id, Event event);
     boolean deleteEvent(int id);
 
     //KITCHENS
     List<Kitchen> getKitchens();
     Kitchen addKitchen(Kitchen kitchen);
     Kitchen readKitchen(int id);
-    Kitchen editKitchen(int id);
+    Kitchen editKitchen(int id, Kitchen kitchen);
     boolean deleteKitchen(int id);
 
     //JUDGE
     List<Judge> getJudges();
     Judge addJudge(Judge judge);
     Judge readJudge(int id);
-    Judge editJudge(int id);
+    Judge editJudge(int id, Judge judge);
     boolean deleteJudge(int id);
 
     //LOGGEDIN USER
