@@ -157,7 +157,42 @@ public class UserRepoImpl implements UserRepo{
 
     @Override
     public List<Judge> getJudges() {
-        return null;
+        ArrayList<Judge> j = new ArrayList<>();
+
+        String sql = "SELECT idevent_judge, event.idevent, judge.idjudge, " +
+                "judge.firstname, judge.lastname, judge.profession, judge.jobdescription, " +
+                "judge.iduser_role, user.username, user.password, user_role.idrole, judge.verified " +
+                "FROM event_judge " +
+                "INNER JOIN event ON event_judge.idevent = event.idevent " +
+                "INNER JOIN judge ON event_judge.idjudge = judge.idjudge " +
+                "INNER JOIN user_role ON judge.iduser_role = user_role.iduser_role " +
+                "INNER JOIN user ON user_role.iduser = user.iduser " +
+                "INNER JOIN role ON user_role.idrole = role.idrole";
+
+        return this.jdbc.query(sql, new ResultSetExtractor<java.util.List<Judge>>() {
+
+            @Override
+            public List<Judge> extractData(ResultSet rs) throws SQLException, DataAccessException {
+
+                while (rs.next()) {
+                    int c = rs.getInt(3);
+                    String firstname = rs.getString(4);
+                    String lastname = rs.getString(5);
+                    String prof = rs.getString(6);
+                    String jd = rs.getString(7);
+                    int ur = rs.getInt(8);
+                    String username = rs.getString(9);
+                    String password = rs.getString(10);
+                    int r = rs.getInt(11);
+                    boolean f = rs.getBoolean(12);
+
+                    Judge judge = new Judge(c, username, password, r, firstname, lastname, prof, jd, f);
+                    j.add(judge);
+                }
+
+                return j;
+            }
+        });
     }
 
     @Override

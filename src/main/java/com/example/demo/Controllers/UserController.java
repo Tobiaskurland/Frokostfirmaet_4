@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.Event;
+import com.example.demo.Models.Judge;
 import com.example.demo.Models.Kitchen;
 import com.example.demo.Models.User;
 import com.example.demo.Services.UserService;
@@ -84,6 +85,9 @@ public class UserController {
 
         List<Kitchen> k = userService.getKitchens();
         model.addAttribute("kitchens", k);
+
+        List<Judge> j = userService.getJudges();
+        model.addAttribute("judges", j);
 
         List<Event> e = userService.getEvents();
         model.addAttribute("events", e);
