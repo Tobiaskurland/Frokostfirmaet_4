@@ -5,23 +5,23 @@ public class Judge extends User{
     private String firstName;
     private String lastName;
     private String profession;
-    private String description;
+    private String jobdescription;
     private boolean verified;
 
-    public Judge(String firstName, String lastName, String profession, String description, boolean verified) {
+    public Judge(String firstName, String lastName, String profession, String jobdescription, boolean verified) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profession = profession;
-        this.description = description;
+        this.jobdescription = jobdescription;
         this.verified = verified;
     }
 
-    public Judge(int id, String username, String password, int role, String firstName, String lastName, String profession, String description, boolean verified) {
+    public Judge(int id, String username, String password, int role, String firstName, String lastName, String profession, String jobdescription, boolean verified) {
         super(id, username, password, role);
         this.firstName = firstName;
         this.lastName = lastName;
         this.profession = profession;
-        this.description = description;
+        this.jobdescription = jobdescription;
         this.verified = verified;
         super.setRole(3);
     }
@@ -54,12 +54,12 @@ public class Judge extends User{
         this.profession = profession;
     }
 
-    public String getDescription() {
-        return description;
+    public String getJobdescription() {
+        return jobdescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setJobdescription(String jobdescription) {
+        this.jobdescription = jobdescription;
     }
 
     public boolean isVerified() {
@@ -76,7 +76,7 @@ public class Judge extends User{
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", profession='" + profession + '\'' +
-                ", description='" + description + '\'' +
+                ", description='" + jobdescription + '\'' +
                 ", verified=" + verified +
                 '}';
     }

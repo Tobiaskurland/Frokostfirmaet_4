@@ -6,8 +6,10 @@ import com.example.demo.Models.Kitchen;
 import com.example.demo.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -140,7 +142,12 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public Kitchen readKitchen(int id) {
 
-        return null;
+        String sql = "SELECT idkitchen, name, address, description FROM kitchen " +
+                "WHERE idkitchen=? ";
+
+        RowMapper<Kitchen> rowMapper = new BeanPropertyRowMapper<>(Kitchen.class);
+        Kitchen kitchen = jdbc.queryForObject(sql, rowMapper, id);
+        return kitchen;
     }
 
     @Override
@@ -202,7 +209,13 @@ public class UserRepoImpl implements UserRepo{
 
     @Override
     public Judge readJudge(int id) {
-        return null;
+
+        String sql = "SELECT idjudge, firstname, lastname, profession, jobdescription FROM judge " +
+                "WHERE idjudge=? ";
+
+        RowMapper<Judge> rowMapper = new BeanPropertyRowMapper<>(Judge.class);
+        Judge judge = jdbc.queryForObject(sql, rowMapper, id);
+        return judge;
     }
 
     @Override

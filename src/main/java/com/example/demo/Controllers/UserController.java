@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,17 +35,20 @@ public class UserController {
     private final String LOGIN = "login";
 
     private final String EVENT = "event";
+    private final String KITCHEN = "kitchen";
+    private final String JUDGE = "judge";
 
-    //INDEX
+//INDEX
     @GetMapping("/")
     public String index(Model model){
         log.info("Index action called...");
 
-        model.addAttribute("events", userService.getEvents());
+        List<Event> e = userService.getEvents();
+        model.addAttribute("events", e);
         return INDEX;
     }
 
-    //LOGIN
+//LOGIN
     @GetMapping("/login")
     public String login(Model model) {
         log.info("login called...");
@@ -78,7 +82,7 @@ public class UserController {
             return REDIRECT + LOGIN;
         }
     }
-
+//EVENT
     @GetMapping("/event")
     public String event(Model model){
         log.info("See event action called..");
@@ -96,9 +100,32 @@ public class UserController {
 
     }
 
+//DETAILS
+    @GetMapping("/kitchen/{id}")
+    public String readKitchen(@PathVariable("id") int id, Model model) {
+        log.info("Read kitchen with id: " + id);
+
+        model.addAttribute("kitchen", userService.readKitchen(id));
+
+        loginStatus(model);
+
+        return KITCHEN;
+    }
+
+    @GetMapping("/judge/{id}")
+    public String readJudge(@PathVariable("id") int id, Model model) {
+        log.info("Read judge with id: " + id);
+
+        model.addAttribute("judge", userService.readJudge(id));
+
+        loginStatus(model);
+
+        return JUDGE;
+    }
 
 
-    //LOGIN STATUS
+
+//LOGIN STATUS
     public void loginStatus(Model model) {
 
         if (currentUser.getRole() == 1) {

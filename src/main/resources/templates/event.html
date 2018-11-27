@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body>
+<body class="w3-light-grey">
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -46,7 +46,9 @@
         <div class="w3-col l3 m6 w3-margin-bottom">
             <div class="w3-display-container">
                 <div class="w3-display-topleft w3-black w3-padding" th:text = "${kitchen.name}"></div>
-                <img th:src="${kitchen.picture}" alt="House" style="width:100%">
+                <a th:href="${'kitchen/' + kitchen.id}">
+                    <img th:src="${kitchen.picture}" alt="Kitchen" style="width:100%">
+                </a>
             </div>
         </div>
     </div>
@@ -56,12 +58,15 @@
         <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16">Judges</h2>
     </div>
 
-    <div class="w3-row-padding w3-grayscale" th:each="judge : ${judges}">
+    <div style="border-color: #111111" class="w3-row-padding w3-grayscale" th:each="judge : ${judges}">
         <div class="w3-col l3 m6 w3-margin-bottom">
-            <h3><b th:text="${judge.firstName}"><b th:text="${judge.lastName}"></b></b></h3>
+            <h3><b th:text="${judge.firstName}"></b></h3>
+            <h3><b th:text="${judge.lastName}"></b></h3>
             <p class="w3-opacity" th:text="${judge.profession}"></p>
-            <p><b th:text="${judge.description}"></b></p>
-            <p><button class="w3-button w3-light-grey w3-block">Contact</button></p>
+            <p><b th:text="${judge.jobdescription}"></b></p>
+            <a th:href="${'judge/' + judge.id}">
+                <p><button class="w3-button w3-dark-grey w3-block">LÆS MER' DIN FED KO</button></p>
+            </a>
         </div>
 
     </div>
