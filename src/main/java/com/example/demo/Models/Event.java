@@ -7,11 +7,11 @@ public class Event {
 
     private String name;
     private String description;
-    private Date date;
+    private String date;
     private ArrayList<Judge> judges;
     private ArrayList<Kitchen> kitchens;
 
-    public Event(String name, String description, Date date, ArrayList<Judge> judges, ArrayList<Kitchen> kitchens) {
+    public Event(String name, String description, String date, ArrayList<Judge> judges, ArrayList<Kitchen> kitchens) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -19,7 +19,7 @@ public class Event {
         this.kitchens = kitchens;
     }
 
-    public Event(String name, String description, Date date) {
+    public Event(String name, String description, String date) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -45,11 +45,11 @@ public class Event {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -14,8 +14,8 @@ public class Kitchen extends User{
         this.verified = verified;
     }
 
-    public Kitchen(String username, String password, int role, String name, String address, String description, boolean verified) {
-        super(username, password, role);
+    public Kitchen(int id, String username, String password, int role, String name, String address, String description, boolean verified) {
+        super(id, username, password, role);
         this.name = name;
         this.address = address;
         this.description = description;

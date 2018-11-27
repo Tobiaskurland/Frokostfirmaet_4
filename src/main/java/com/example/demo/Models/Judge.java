@@ -16,8 +16,8 @@ public class Judge extends User{
         this.verified = verified;
     }
 
-    public Judge(String username, String password, int role, String firstName, String lastName, String profession, String description, boolean verified) {
-        super(username, password, role);
+    public Judge(int id, String username, String password, int role, String firstName, String lastName, String profession, String description, boolean verified) {
+        super(id, username, password, role);
         this.firstName = firstName;
         this.lastName = lastName;
         this.profession = profession;
