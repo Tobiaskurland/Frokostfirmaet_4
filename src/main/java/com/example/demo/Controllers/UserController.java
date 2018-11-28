@@ -73,7 +73,7 @@ public class UserController {
 
             currentUser = userService.loggedIn(user);
 
-            return INDEX;
+            return REDIRECT;
         }
         else {
 

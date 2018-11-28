@@ -42,12 +42,12 @@
         <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16">Kitchens</h2>
     </div>
 
-    <div class="w3-row-padding" th:each = "kitchen : ${kitchens}">
+    <div th:each = "kitchen : ${kitchens}">
         <div class="w3-col l3 m6 w3-margin-bottom">
             <div class="w3-display-container">
                 <div class="w3-display-topleft w3-black w3-padding" th:text = "${kitchen.name}"></div>
                 <a th:href="${'kitchen/' + kitchen.id}">
-                    <img th:src="${kitchen.picture}" alt="Kitchen" style="width:100%">
+                    <img th:src="${kitchen.picture}" alt="Kitchen" style="width:90%">
                 </a>
             </div>
         </div>
@@ -58,8 +58,8 @@
         <h2 class="w3-border-bottom w3-border-light-grey w3-padding-16">Judges</h2>
     </div>
 
-    <div style="border-color: #111111" class="w3-row-padding w3-grayscale" th:each="judge : ${judges}">
-        <div class="w3-col l3 m6 w3-margin-bottom">
+    <div class="w3-grayscale" th:each="judge : ${judges}">
+        <div class="w3-col l2 m5 w3-margin-bottom">
             <h3><b th:text="${judge.firstName}"></b></h3>
             <h3><b th:text="${judge.lastName}"></b></h3>
             <p class="w3-opacity" th:text="${judge.profession}"></p>
@@ -67,6 +67,7 @@
             <a th:href="${'judge/' + judge.id}">
                 <p><button class="w3-button w3-dark-grey w3-block">LÆS MER' DIN FED KO</button></p>
             </a>
+            <br>
         </div>
 
     </div>
