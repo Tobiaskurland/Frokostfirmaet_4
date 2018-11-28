@@ -29,18 +29,36 @@ public class UserController {
     //Current User logged in
     User currentUser = new User();
 
-    //RETURN STRINGS
+//RETURN STRINGS
     private final String REDIRECT = "redirect:/";
     private final String INDEX = "index";
     private final String LOGIN = "login";
 
+    //GUEST
     private final String EVENT = "event";
     private final String KITCHEN = "kitchen/kitchen";
     private final String JUDGE = "judge/judge";
 
-    private final String INDEXADMIN = "admin/index_admin";
+    //ADMIN
+    private final String INDEX_ADMIN = "admin/index_admin";
+    private final String EVENT_ADMIN = "admin/event_admin";
+    private final String JUDGE_ADMIN = "admin/judge_admin";
+    private final String KITCHEN_ADMIN = "admin/kitchen_admin";
 
-//INDEX
+    //KITCHEN
+    private final String INDEX_KITCHEN = "kitchen/index_kitchen";
+    private final String EVENT_KITCHEN = "kitchen/event_kitchen";
+    private final String JUDGE_KITCHEN = "kitchen/judge_kitchen";
+    private final String KITCHEN_KITCHEN = "kitchen/kitchen_kitchen";
+
+    //JUDGE
+    private final String INDEX_JUDGE = "judge/index_judge";
+    private final String EVENT_JUDGE = "judge/event_judge";
+    private final String JUDGE_JUDGE = "judge/judge_judge";
+    private final String KITCHEN_JUDGE = "judge/kitchen_judge";
+
+
+    //INDEX
     @GetMapping("/")
     public String index(Model model){
         log.info("Index action called...");
@@ -59,7 +77,7 @@ public class UserController {
         log.info("login called...");
 
         model.addAttribute("users", new User());
-        model.addAttribute("pageTitle", "Login");
+        //model.addAttribute("pageTitle", "Login");
         model.addAttribute("isLogin", true);
 
         loginStatus(model);
@@ -80,13 +98,13 @@ public class UserController {
 
             if (currentUser.getRole() == 1) {
 
-                return INDEXADMIN;
+                return REDIRECT + INDEX_ADMIN;
             } else if (currentUser.getRole() == 2) {
 
-                return REDIRECT;
+                return REDIRECT + INDEX_KITCHEN;
             } else if (currentUser.getRole() == 3) {
 
-                return REDIRECT;
+                return REDIRECT + INDEX_JUDGE;
             }
         } else {
 
@@ -149,9 +167,48 @@ public class UserController {
 
         loginStatus(model);
 
-        return INDEXADMIN;
+        return INDEX_ADMIN;
     }
 
+    @GetMapping("/admin/event_admin")
+    public String eventAdmin(Model model) {
+        log.info("See eventAdmin action called..");
+
+        List<Kitchen> k = userService.getKitchens();
+        model.addAttribute("kitchens", k);
+
+        List<Judge> j = userService.getJudges();
+        model.addAttribute("judges", j);
+
+        List<Event> e = userService.getEvents();
+        model.addAttribute("events", e);
+
+        loginStatus(model);
+
+        return EVENT_ADMIN;
+    }
+
+    @GetMapping("/admin/kitchen_admin/{id}")
+    public String readKitchenAdmin(@PathVariable("id") int id, Model model) {
+        log.info("Read kitchenAdmin with id: " + id);
+
+        model.addAttribute("kitchen", userService.readKitchen(id));
+
+        loginStatus(model);
+
+        return KITCHEN_ADMIN;
+    }
+
+    @GetMapping("/admin/judge_admin/{id}")
+    public String readJudgeAdmin(@PathVariable("id") int id, Model model) {
+        log.info("Read judgeAdmin with id: " + id);
+
+        model.addAttribute("judge", userService.readJudge(id));
+
+        loginStatus(model);
+
+        return JUDGE_ADMIN;
+    }
 
 
 
@@ -164,11 +221,9 @@ public class UserController {
             model.addAttribute("username", currentUser.getUsername());
         } else if (currentUser.getRole() == 2) {
             model.addAttribute("isLoggedin", true);
-            model.addAttribute("isKitchen", true);
             model.addAttribute("username", currentUser.getUsername());
         } else if (currentUser.getRole() == 3) {
             model.addAttribute("isLoggedin", true);
-            model.addAttribute("isJudge", true);
             model.addAttribute("username", currentUser.getUsername());
         }
     }
