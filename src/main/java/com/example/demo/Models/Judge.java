@@ -71,6 +71,16 @@ public class Judge extends User{
     }
 
     @Override
+    public int getRole() {
+        return super.getRole();
+    }
+
+    @Override
+    public void setRole(int role) {
+        super.setRole(3);
+    }
+
+    @Override
     public String toString() {
         return "Judge{" +
                 "firstName='" + firstName + '\'' +

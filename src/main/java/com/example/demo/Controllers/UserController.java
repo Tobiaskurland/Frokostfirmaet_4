@@ -35,8 +35,8 @@ public class UserController {
     private final String LOGIN = "login";
 
     private final String EVENT = "event";
-    private final String KITCHEN = "kitchen";
-    private final String JUDGE = "judge";
+    private final String KITCHEN = "kitchen/kitchen";
+    private final String JUDGE = "judge/judge";
 
 //INDEX
     @GetMapping("/")
@@ -45,6 +45,9 @@ public class UserController {
 
         List<Event> e = userService.getEvents();
         model.addAttribute("events", e);
+
+        loginStatus(model);
+
         return INDEX;
     }
 
@@ -96,12 +99,14 @@ public class UserController {
         List<Event> e = userService.getEvents();
         model.addAttribute("events", e);
 
+        loginStatus(model);
+
         return EVENT;
 
     }
 
 //DETAILS
-    @GetMapping("/kitchen/{id}")
+    @GetMapping("/kitchen/kitchen/{id}")
     public String readKitchen(@PathVariable("id") int id, Model model) {
         log.info("Read kitchen with id: " + id);
 
@@ -112,7 +117,7 @@ public class UserController {
         return KITCHEN;
     }
 
-    @GetMapping("/judge/{id}")
+    @GetMapping("/judge/judge/{id}")
     public String readJudge(@PathVariable("id") int id, Model model) {
         log.info("Read judge with id: " + id);
 

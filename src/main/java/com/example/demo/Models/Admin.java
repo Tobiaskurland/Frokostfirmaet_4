@@ -15,4 +15,14 @@ public class Admin extends User {
     public String toString() {
         return "Admin{}";
     }
+
+    @Override
+    public int getRole() {
+        return super.getRole();
+    }
+
+    @Override
+    public void setRole(int role) {
+        super.setRole(1);
+    }
 }

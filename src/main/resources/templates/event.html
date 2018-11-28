@@ -46,7 +46,7 @@
         <div class="w3-col l3 m6 w3-margin-bottom">
             <div class="w3-display-container">
                 <div class="w3-display-topleft w3-black w3-padding" th:text = "${kitchen.name}"></div>
-                <a th:href="${'kitchen/' + kitchen.id}">
+                <a th:href="${'kitchen/kitchen/' + kitchen.id}">
                     <img th:src="${kitchen.picture}" alt="Kitchen" style="width:90%">
                 </a>
             </div>
@@ -64,7 +64,7 @@
             <h3><b th:text="${judge.lastName}"></b></h3>
             <p class="w3-opacity" th:text="${judge.profession}"></p>
             <p><b th:text="${judge.jobdescription}"></b></p>
-            <a th:href="${'judge/' + judge.id}">
+            <a th:href="${'judge/judge/' + judge.id}">
                 <p><button class="w3-button w3-dark-grey w3-block">LÆS MER' DIN FED KO</button></p>
             </a>
             <br>

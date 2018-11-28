@@ -71,6 +71,16 @@ public class Kitchen extends User{
     }
 
     @Override
+    public int getRole() {
+        return super.getRole();
+    }
+
+    @Override
+    public void setRole(int role) {
+        super.setRole(2);
+    }
+
+    @Override
     public String toString() {
         return "Kitchen{" +
                 "name='" + name + '\'' +

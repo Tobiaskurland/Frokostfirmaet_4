@@ -5,7 +5,7 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int role = 0;
+    private int role;
 
     public User() {
 
