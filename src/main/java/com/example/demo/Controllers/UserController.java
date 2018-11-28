@@ -38,6 +38,8 @@ public class UserController {
     private final String KITCHEN = "kitchen/kitchen";
     private final String JUDGE = "judge/judge";
 
+    private final String INDEXADMIN = "admin/index_admin";
+
 //INDEX
     @GetMapping("/")
     public String index(Model model){
@@ -70,20 +72,29 @@ public class UserController {
         boolean loginMatch = false;
         loginMatch = userService.loginMatch(user);
 
-        if(loginMatch == true) {
+        if (loginMatch == true) {
             redirAttr.addFlashAttribute("loginsuccess", true);
             redirAttr.addFlashAttribute("username", user.getUsername());
 
             currentUser = userService.loggedIn(user);
 
-            return REDIRECT;
-        }
-        else {
+            if (currentUser.getRole() == 1) {
+
+                return INDEXADMIN;
+            } else if (currentUser.getRole() == 2) {
+
+                return REDIRECT;
+            } else if (currentUser.getRole() == 3) {
+
+                return REDIRECT;
+            }
+        } else {
 
             redirAttr.addFlashAttribute("loginError", true);
 
             return REDIRECT + LOGIN;
         }
+        return REDIRECT + LOGIN;
     }
 //EVENT
     @GetMapping("/event")
@@ -127,6 +138,20 @@ public class UserController {
 
         return JUDGE;
     }
+
+//ADMIN
+    @GetMapping("/admin/index_admin")
+    public String indexAdmin(Model model){
+        log.info("IndexAdmin action called...");
+
+        List<Event> e = userService.getEvents();
+        model.addAttribute("events", e);
+
+        loginStatus(model);
+
+        return INDEXADMIN;
+    }
+
 
 
 
