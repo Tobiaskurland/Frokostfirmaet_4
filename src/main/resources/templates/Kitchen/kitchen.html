@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <style>
-            body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
 </head>
 <body class="w3-light-grey">
@@ -25,7 +25,7 @@
 <br><br>
 
 <div>
-    <h1 style="font-family: 'Arial Black'">Kitchen: <span th:text="${kitchen.name}"></span></h1>
+    <h1>Kitchen: <span th:text="${kitchen.name}"></span></h1>
     <form th:method="Put" th:action="@{/kitchen/kitchen}" th:object="${kitchen}">
         <!--If you dont send the ID, JPA will create a new student object-->
         <input type="hidden" th:field="${kitchen.id}"/>

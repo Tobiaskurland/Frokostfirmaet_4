@@ -77,7 +77,7 @@
         <a th:href="@{/admin/index_admin}" class="w3-bar-item w3-button"><b>FF</b> EVENT</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a href="#" class="notification">
+            <a href="/admin/verify" class="notification">
                 <span>Request</span>
                 <span class="badge">2</span>
             </a>
@@ -96,7 +96,7 @@
 <br><br>
 
 <div>
-    <h1 style="font-family: 'Arial Black'">Kitchen: <span th:text="${kitchen.name}"></span></h1>
+    <h1>Kitchen: <span th:text="${kitchen.name}"></span></h1>
     <form th:method="Put" th:action="@{/admin/kitchen_admin}" th:object="${kitchen}">
         <!--If you dont send the ID, JPA will create a new student object-->
         <input type="hidden" th:field="${kitchen.id}"/>

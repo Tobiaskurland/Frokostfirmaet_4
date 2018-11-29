@@ -44,6 +44,7 @@ public class UserController {
     private final String EVENT_ADMIN = "admin/event_admin";
     private final String JUDGE_ADMIN = "admin/judge_admin";
     private final String KITCHEN_ADMIN = "admin/kitchen_admin";
+    private final String VERIFY = "admin/verify";
 
     //KITCHEN
     private final String INDEX_KITCHEN = "kitchen/index_kitchen";
@@ -208,6 +209,13 @@ public class UserController {
         loginStatus(model);
 
         return JUDGE_ADMIN;
+    }
+
+    @GetMapping("/admin/verify")
+    public String verify(Model model){
+
+        model.addAttribute("kitchens", userService.getKitchens());
+        return VERIFY;
     }
 
 
