@@ -81,7 +81,7 @@
                 <span>Request</span>
                 <span class="badge">2</span>
             </a>
-            <a href="/admin/event_admin" class="user" th:classappend="${isLoggedin} ? '' : 'd-none'"></i> <span th:text="${username}"></span></a>
+            <a href="/admin/event_admin"></i> <span th:text="${username}"></span></a>
 
             <a  class="nav-item" th:classappend="(${isLogin} ? 'active' : '') + (${isLoggedin} ? 'd-none' : '')" />
             <a class="nav-link" href="/login">Login</a>

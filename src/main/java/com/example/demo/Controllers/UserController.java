@@ -35,6 +35,8 @@ public class UserController {
     private final String EVENT = "event";
     private final String KITCHEN = "kitchen/kitchen";
     private final String JUDGE = "judge/judge";
+    private final String JUDGE_FORM = "judge/judge_form";
+    private final String KITCHEN_FORM = "kitchen/kitchen_form";
 
     //ADMIN
     private final String INDEX_ADMIN = "admin/index_admin";
@@ -136,6 +138,18 @@ public class UserController {
 
     }
 
+    @GetMapping("/judge/judge_form")
+    public String judgeForm(Model model){
+
+        return JUDGE_FORM;
+    }
+
+    @GetMapping("/kitchen/kitchen_form")
+    public String kitchenForm(Model model){
+
+        return KITCHEN_FORM;
+    }
+
 //DETAILS
     @GetMapping("/kitchen/kitchen/{id}")
     public String readKitchen(@PathVariable("id") int id, Model model) {
@@ -164,76 +178,90 @@ public class UserController {
     public String indexAdmin(Model model){
         log.info("IndexAdmin action called...");
 
-        List<Event> e = userService.getEvents();
-        model.addAttribute("events", e);
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
+            List<Event> e = userService.getEvents();
+            model.addAttribute("events", e);
 
-        loginStatus(model);
+            model.addAttribute("username", currentUser.getUsername());
 
-        return INDEX_ADMIN;
+            return INDEX_ADMIN;
+        }
+        return LOGIN;
     }
 
     @GetMapping("/admin/event_admin")
     public String eventAdmin(Model model) {
         log.info("See eventAdmin action called..");
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
+            List<Kitchen> k = userService.getKitchens();
+            model.addAttribute("kitchens", k);
 
-        List<Kitchen> k = userService.getKitchens();
-        model.addAttribute("kitchens", k);
+            List<Judge> j = userService.getJudges();
+            model.addAttribute("judges", j);
 
-        List<Judge> j = userService.getJudges();
-        model.addAttribute("judges", j);
+            List<Event> e = userService.getEvents();
+            model.addAttribute("events", e);
 
-        List<Event> e = userService.getEvents();
-        model.addAttribute("events", e);
+            model.addAttribute("username", currentUser.getUsername());
 
-        loginStatus(model);
-
-        return EVENT_ADMIN;
+            return EVENT_ADMIN;
+        }
+        return LOGIN;
     }
 
     @GetMapping("/admin/kitchen_admin/{id}")
     public String readKitchenAdmin(@PathVariable("id") int id, Model model) {
         log.info("Read kitchenAdmin with id: " + id);
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
+            model.addAttribute("kitchen", userService.readKitchen(id));
 
-        model.addAttribute("kitchen", userService.readKitchen(id));
+            model.addAttribute("username", currentUser.getUsername());
 
-        loginStatus(model);
-
-        return KITCHEN_ADMIN;
+            return KITCHEN_ADMIN;
+        }
+        return LOGIN;
     }
 
     @GetMapping("/admin/judge_admin/{id}")
     public String readJudgeAdmin(@PathVariable("id") int id, Model model) {
         log.info("Read judgeAdmin with id: " + id);
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
+            model.addAttribute("judge", userService.readJudge(id));
 
-        model.addAttribute("judge", userService.readJudge(id));
+            model.addAttribute("username", currentUser.getUsername());
 
-        loginStatus(model);
-
-        return JUDGE_ADMIN;
+            return JUDGE_ADMIN;
+        }
+        return LOGIN;
     }
 
     @GetMapping("/admin/verify")
     public String verify(Model model){
         log.info("Verify action called...");
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
+            model.addAttribute("kitchens", userService.getKitchens());
 
-        model.addAttribute("kitchens", userService.getKitchens());
+            model.addAttribute("username", currentUser.getUsername());
 
-        loginStatus(model);
-
-        return VERIFY;
+            return VERIFY;
+        }
+        return LOGIN;
     }
 
     @PutMapping("/admin/verify/{id}")
     public String verify(@PathVariable("id") int id, Model model) {
         log.info("Verify put action called...");
+        if(currentUser.getRole() == 1) { //checks if an admin is logged in
 
-        userService.confirmKitchen(id);
+            userService.confirmKitchen(id);
 
-        model.addAttribute("kitchen", userService.getKitchens());
+            //model.addAttribute("kitchen", userService.getKitchens());
 
-        loginStatus(model);
+            model.addAttribute("username", currentUser.getUsername());
 
-        return REDIRECT + VERIFY;
+            return REDIRECT + VERIFY;
+        }
+        return LOGIN;
     }
 
 //KITCHEN
@@ -242,7 +270,7 @@ public class UserController {
 
         model.addAttribute("events", userService.getEvents());
 
-        loginStatus(model);
+        model.addAttribute("username", currentUser.getUsername());
 
         return INDEX_KITCHEN;
     }

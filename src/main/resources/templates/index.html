@@ -18,15 +18,8 @@
         <a th:href="@{/}" class="w3-bar-item w3-button"><b>FF</b> EVENT</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-                <a class="nav-item" th:classappend="(${isLogin} ? 'active' : '') + (${isLoggedin} ? 'd-none' : '')" >
                     <a class="nav-link" href="/login">Login</a>
 
-
-            <span class="ml-auto">
-                <a href="/event" class="user" th:classappend="${isLoggedin} ? '' : 'd-none'"><span th:text="${username}"></span></a>
-                <a href="/logout" th:classappend="${isLoggedin} ? '' : 'd-none'"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </span>
-                </a>
         </div>
     </div>
 </div>

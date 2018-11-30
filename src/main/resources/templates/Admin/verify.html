@@ -19,7 +19,7 @@
         <a th:href="@{/admin/index_admin}" class="w3-bar-item w3-button"><b>FF</b> EVENT</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a href="/admin/event_admin" class="user" th:classappend="${isLoggedin} ? '' : 'd-none'"></i> <span th:text="${username}"></span></a>
+            <a href="/admin/event_admin"><span th:text="${username}"></span></a>
 
             <a  class="nav-item" th:classappend="(${isLogin} ? 'active' : '') + (${isLoggedin} ? 'd-none' : '')" />
             <a class="nav-link" href="/login">Login</a>
@@ -52,8 +52,9 @@
                 <td th:unless="${kitchen.verified}">NO</td>
                 <!-- Give the option to verify the kitchen -->
                 <td th:if="not ${kitchen.verified}">
-                    <a type="submit" class="btn btn-success" method="put" th:href="${'admin/verify/' + kitchen.id}">faisal</a>
-
+                <form method="post">
+                    <a type="hidden" class="btn btn-success" name="_method" value="put" th:href="${'admin/verify/' + kitchen.id}">faisal</a>
+                </form>
                     <a style="font-size: 22px"> &#10060; </a>
                 </td>
             </tr>
