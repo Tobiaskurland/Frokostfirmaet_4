@@ -37,6 +37,6 @@ public interface UserService {
     User loggedIn(User user);
 
     //CONFIRM
-    boolean confirmKitchen(Kitchen kitchen);
+    void confirmKitchen(int id);
     boolean confirmJudge(Judge judge);
 }

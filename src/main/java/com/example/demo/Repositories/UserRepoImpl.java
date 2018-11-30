@@ -83,6 +83,7 @@ public class UserRepoImpl implements UserRepo{
         return false;
     }
 
+
 //KITCHENS
 
     @Override
@@ -136,7 +137,7 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public Kitchen addKitchen(Kitchen kitchen) {
 
-       return null;
+       return null; //TODO
     }
 
     @Override
@@ -153,12 +154,12 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public Kitchen editKitchen(int id, Kitchen kitchen) {
         return null;
-    }
+    }//TODO
 
     @Override
     public boolean deleteKitchen(int id) {
         return false;
-    }
+    }//TODO
 
 //JUDGES
 
@@ -205,7 +206,7 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public Judge addJudge(Judge judge) {
         return null;
-    }
+    }//TODO
 
     @Override
     public Judge readJudge(int id) {
@@ -221,12 +222,12 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public Judge editJudge(int id, Judge judge) {
         return null;
-    }
+    }//TODO
 
     @Override
     public boolean deleteJudge(int id) {
         return false;
-    }
+    }//TODO
 
 //LOGGEDIN USER
 
@@ -265,8 +266,11 @@ public class UserRepoImpl implements UserRepo{
 //CONFIRMS
 
     @Override
-    public boolean confirmKitchen(Kitchen kitchen) {
-        return false;
+    public void confirmKitchen(int id) {
+
+        String sql = "UPDATE kitchen SET verified=1 WHERE idkitchen=?";
+        jdbc.update(sql, id);
+
     }
 
     @Override

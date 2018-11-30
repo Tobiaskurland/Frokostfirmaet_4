@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService{
         return userRepo.deleteEvent(id);
     }
 
+
 //KITCHENS
 
     @Override
@@ -141,9 +142,9 @@ public class UserServiceImpl implements UserService{
 //CONFIRMS
 
     @Override
-    public boolean confirmKitchen(Kitchen kitchen) {
+    public void confirmKitchen(int id) {
 
-        return userRepo.confirmKitchen(kitchen);
+        userRepo.confirmKitchen(id);
     }
 
     @Override

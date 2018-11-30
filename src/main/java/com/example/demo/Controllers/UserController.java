@@ -8,10 +8,7 @@ import com.example.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -106,6 +103,11 @@ public class UserController {
             } else if (currentUser.getRole() == 3) {
 
                 return REDIRECT + INDEX_JUDGE;
+            }else {
+
+                redirAttr.addFlashAttribute("loginError", true);
+
+                return REDIRECT + LOGIN;
             }
         } else {
 
@@ -113,7 +115,6 @@ public class UserController {
 
             return REDIRECT + LOGIN;
         }
-        return REDIRECT + LOGIN;
     }
 //EVENT
     @GetMapping("/event")
@@ -213,12 +214,50 @@ public class UserController {
 
     @GetMapping("/admin/verify")
     public String verify(Model model){
+        log.info("Verify action called...");
 
         model.addAttribute("kitchens", userService.getKitchens());
+
+        loginStatus(model);
+
         return VERIFY;
     }
 
+    @PutMapping("/admin/verify/{id}")
+    public String verify(@PathVariable("id") int id, Model model) {
+        log.info("Verify put action called...");
 
+        userService.confirmKitchen(id);
+
+        model.addAttribute("kitchen", userService.getKitchens());
+
+        loginStatus(model);
+
+        return REDIRECT + VERIFY;
+    }
+
+//KITCHEN
+    @GetMapping("/kitchen/index_kitchen")
+    public String eventKitchen(Model model){
+
+        model.addAttribute("events", userService.getEvents());
+
+        loginStatus(model);
+
+        return INDEX_KITCHEN;
+    }
+
+//JUDGE
+
+    @GetMapping("/judge/index_judge")
+    public String eventJudge(Model model){
+
+        model.addAttribute("events", userService.getEvents());
+
+        loginStatus(model);
+
+        return INDEX_JUDGE;
+    }
 
 //LOGIN STATUS
     public void loginStatus(Model model) {

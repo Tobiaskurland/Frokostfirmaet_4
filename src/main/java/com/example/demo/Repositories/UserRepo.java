@@ -36,6 +36,6 @@ public interface UserRepo {
     User findLogin(String username, String password);
 
     //CONFIRM
-    boolean confirmKitchen(Kitchen kitchen);
+    void confirmKitchen(int id);
     boolean confirmJudge(Judge judge);
 }
