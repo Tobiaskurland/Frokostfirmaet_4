@@ -90,14 +90,13 @@ public class UserRepoImpl implements UserRepo{
     public List<Kitchen> getKitchens() {
         ArrayList<Kitchen> k = new ArrayList<>();
 
-        String sql = "SELECT idevent_kitchen, event.idevent, event.name, event.description, event.date, kitchen.idkitchen, " +
-                "kitchen.name, kitchen.address, kitchen.description, kitchen.picture, kitchen.iduser_role, user.username, user.password, user_role.idrole, role.type, kitchen.verified " +
+        String sql = "SELECT idevent_kitchen, kitchen.idkitchen, " +
+                "kitchen.name, kitchen.address, kitchen.description, kitchen.picture, kitchen.iduser, user.username, user.password, user.idrole, kitchen.verified " +
                 "FROM event_kitchen " +
                 "INNER JOIN event ON event_kitchen.idevent = event.idevent " +
                 "INNER JOIN kitchen ON event_kitchen.idkitchen = kitchen.idkitchen " +
-                "INNER JOIN user_role ON kitchen.iduser_role = user_role.iduser_role " +
-                "INNER JOIN user ON user_role.iduser = user.iduser " +
-                "INNER JOIN role ON user_role.idrole = role.idrole";
+                "INNER JOIN user ON kitchen.iduser = user.iduser " +
+                "INNER JOIN role ON role.idrole = user.idrole";
 
         return this.jdbc.query(sql, new ResultSetExtractor<java.util.List<Kitchen>>() {
 
@@ -105,24 +104,19 @@ public class UserRepoImpl implements UserRepo{
             public List<Kitchen> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
                 while (rs.next()) {
-                    int a = rs.getInt(1);
-                    int b = rs.getInt(2);
-                    String eName = rs.getString(3);
-                    String eDescription = rs.getString(4);
-                    String date = rs.getString(5);
-                    int c = rs.getInt(6);
-                    String kName = rs.getString(7);
-                    String adresse = rs.getString(8);
-                    String kDescription = rs.getString(9);
-                    String picture = rs.getString(10);
-                    int d = rs.getInt(11);
-                    String username = rs.getString(12);
-                    String password = rs.getString(13);
-                    int e = rs.getInt(14);
-                    String type = rs.getString(15);
-                    boolean f = rs.getBoolean(16);
+                    int ideventK = rs.getInt(1);
+                    int idkit = rs.getInt(2);
+                    String kName = rs.getString(3);
+                    String adresse = rs.getString(4);
+                    String kDescription = rs.getString(5);
+                    String picture = rs.getString(6);
+                    int iduser = rs.getInt(7);
+                    String username = rs.getString(8);
+                    String password = rs.getString(9);
+                    int role = rs.getInt(10);
+                    boolean f = rs.getBoolean(11);
 
-                    Kitchen kitchen = new Kitchen (c,username, password, e, kName, adresse, kDescription, picture, f);
+                    Kitchen kitchen = new Kitchen (idkit,username, password, role, kName, adresse, kDescription, picture, f);
 
                     k.add(kitchen);
 
@@ -169,13 +163,12 @@ public class UserRepoImpl implements UserRepo{
 
         String sql = "SELECT idevent_judge, event.idevent, judge.idjudge, " +
                 "judge.firstname, judge.lastname, judge.profession, judge.jobdescription, " +
-                "judge.iduser_role, user.username, user.password, user_role.idrole, judge.verified " +
+                "judge.iduser, user.username, user.password, user.idrole, judge.verified " +
                 "FROM event_judge " +
                 "INNER JOIN event ON event_judge.idevent = event.idevent " +
                 "INNER JOIN judge ON event_judge.idjudge = judge.idjudge " +
-                "INNER JOIN user_role ON judge.iduser_role = user_role.iduser_role " +
-                "INNER JOIN user ON user_role.iduser = user.iduser " +
-                "INNER JOIN role ON user_role.idrole = role.idrole";
+                "INNER JOIN user ON judge.iduser = user.iduser " +
+                "INNER JOIN role ON role.idrole = user.idrole";
 
         return this.jdbc.query(sql, new ResultSetExtractor<java.util.List<Judge>>() {
 
@@ -234,10 +227,8 @@ public class UserRepoImpl implements UserRepo{
     @Override
     public User findLogin(String un, String pas) {
 
-        String sql = "SELECT iduser_role, user.username, user.password, role.idrole FROM user_role " +
-                "INNER JOIN user ON user_role.iduser = user.iduser " +
-                "INNER JOIN role ON user_role.idrole = role.idrole " +
-                "WHERE username = ? AND password = ?";
+        String sql = "SELECT iduser, username, password, idrole FROM user " +
+                    "WHERE username = ? AND password = ?";
 
         return this.jdbc.query(sql, new ResultSetExtractor<User>() {
             @Override
@@ -247,7 +238,7 @@ public class UserRepoImpl implements UserRepo{
                 User user = new User();
 
                 while (rs.next()) {
-                    id = rs.getInt("iduser_role");
+                    id = rs.getInt("iduser");
                     userName = rs.getString("username");
                     pass = rs.getString("password");
                     role = rs.getInt("idrole");

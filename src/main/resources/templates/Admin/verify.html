@@ -19,15 +19,8 @@
         <a th:href="@{/admin/index_admin}" class="w3-bar-item w3-button"><b>FF</b> EVENT</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-            <a href="/admin/event_admin"><span th:text="${username}"></span></a>
-
-            <a  class="nav-item" th:classappend="(${isLogin} ? 'active' : '') + (${isLoggedin} ? 'd-none' : '')" />
-            <a class="nav-link" href="/login">Login</a>
-
-
-            <span class="ml-auto">
-                <a href="/login" th:classappend="${isLoggedin} ? '' : 'd-none'"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </span>
+            <a href="/admin/event_admin" class="w3-bar-item w3-button"><span th:text="${username}"></span></a>
+            <a class="w3-bar-item w3-button" href="/login">Logout</a>
         </div>
     </div>
 </div>
