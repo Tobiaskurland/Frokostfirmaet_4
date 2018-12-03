@@ -37,6 +37,11 @@ public interface UserService {
     boolean loginMatch(User user);
     User loggedIn(User user);
 
+    //SIGN UP
+    boolean signUpMatch(User user);
+    User addUser (User user);
+
+
     //CONFIRM
     void confirmKitchen(int id);
     boolean confirmJudge(Judge judge);

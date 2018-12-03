@@ -143,6 +143,30 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+//SIGN UP
+
+    public boolean signUpMatch(User user){
+        boolean signUpMatch;
+
+        if(user.getUsername() != null && user.getPassword() != null){
+            signUpMatch = true;
+        }
+        else{
+            signUpMatch = false;
+        }
+
+        return signUpMatch;
+    }
+
+    @Override
+    public User addUser (User user) {
+
+
+        return userRepo.addUser(user);
+    }
+
+
+
 
 //CONFIRMS
 

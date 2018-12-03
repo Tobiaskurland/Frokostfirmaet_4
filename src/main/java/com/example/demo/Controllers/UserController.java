@@ -32,6 +32,7 @@ public class UserController {
     private final String REDIRECT = "redirect:/";
     private final String INDEX = "index";
     private final String LOGIN = "login";
+    private final String SIGNUP = "signup";
 
     //GUEST
     private final String EVENT = "event";
@@ -132,6 +133,8 @@ public class UserController {
         }
     }
 
+
+
 //LOGOUT
 
     @GetMapping("/logout")
@@ -140,6 +143,37 @@ public class UserController {
 
         return REDIRECT + LOGIN;
     }
+
+
+// SIGN UP
+
+    @GetMapping("/signup")
+    public String signup(Model model){
+
+        log.info("Sign up called...");
+        model.addAttribute("user", new User());
+
+        return SIGNUP;
+    }
+
+    @PostMapping("/signup")
+    public String signup(@ModelAttribute User user, Model model,RedirectAttributes redirAttr) {
+        boolean signUpMatch = false;
+        signUpMatch = userService.signUpMatch(user);
+
+        if (signUpMatch == true) {
+            redirAttr.addFlashAttribute("loginsuccess", true);
+            userService.addUser(user);
+            log.info("User created...");
+        } else {
+
+            redirAttr.addFlashAttribute("loginError", true);
+            log.info("User failed to create...");
+            return SIGNUP;
+        }
+            return REDIRECT;
+    }
+
 
 //EVENT
 

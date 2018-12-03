@@ -274,6 +274,15 @@ public class UserRepoImpl implements UserRepo{
         },un, pas);
     }
 
+ // SIGN UP
+
+    public User addUser (User user)
+    {
+        String sql = "INSERT INTO user Values (default, ?, ?, 4)";
+        jdbc.update(sql, user.getUsername(), user.getPassword());
+
+        return user;
+    }
 
 //CONFIRMS
 
