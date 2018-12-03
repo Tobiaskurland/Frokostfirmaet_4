@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,7 +117,7 @@ public class UserRepoImpl implements UserRepo{
                     int role = rs.getInt(10);
                     boolean f = rs.getBoolean(11);
 
-                    Kitchen kitchen = new Kitchen (idkit,username, password, role, kName, adresse, kDescription, picture, f);
+                    Kitchen kitchen = new Kitchen (idkit,username, password, role, kName, adresse, kDescription, picture, iduser, f);
 
                     k.add(kitchen);
 
@@ -129,10 +130,17 @@ public class UserRepoImpl implements UserRepo{
 
 
     @Override
+    @Transactional
     public Kitchen addKitchen(Kitchen kitchen) {
 
-       return null; //TODO
+        String sql = "INSERT INTO kitchen values (default, ?, ?, ?, ?, ?, 0)";
+        jdbc.update(sql, kitchen.getName(), kitchen.getAddress(), kitchen.getDescription(), kitchen.getPicture(), kitchen.getIduser());
+
+
+
+        return kitchen;
     }
+
 
     @Override
     public Kitchen readKitchen(int id) {
@@ -155,7 +163,15 @@ public class UserRepoImpl implements UserRepo{
         return false;
     }//TODO
 
-//JUDGES
+    @Override
+    public void addKitchenToEvent(int id) {
+
+        String sql = "INSERT INTO event_kitchen values (default, ?, ?)";
+        jdbc.update(sql, 1 , id);
+
+    }
+
+    //JUDGES
 
     @Override
     public List<Judge> getJudges() {
@@ -187,7 +203,7 @@ public class UserRepoImpl implements UserRepo{
                     int r = rs.getInt(11);
                     boolean f = rs.getBoolean(12);
 
-                    Judge judge = new Judge(c, username, password, r, firstname, lastname, prof, jd, f);
+                    Judge judge = new Judge(c, username, password, r, firstname, lastname, prof, jd, r, f);
                     j.add(judge);
                 }
 
@@ -198,8 +214,13 @@ public class UserRepoImpl implements UserRepo{
 
     @Override
     public Judge addJudge(Judge judge) {
-        return null;
+
+        String sql = "INSERT INTO kitchen values (default, ?, ?, ?, ?, ?, 0)";
+        jdbc.update(sql, judge.getFirstName(), judge.getLastName(), judge.getProfession(), judge.getJobdescription(), judge.getIduser());
+
+        return judge;
     }//TODO
+
 
     @Override
     public Judge readJudge(int id) {

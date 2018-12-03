@@ -6,28 +6,39 @@ public class Kitchen extends User{
     private String address;
     private String description;
     private String picture;
+    private int iduser;
     private boolean verified = false;
 
-    public Kitchen(String name, String address, String description, String picture, boolean verified) {
+    public Kitchen(String name, String address, String description, String picture, int iduser, boolean verified) {
         this.name = name;
         this.address = address;
         this.description = description;
         this.picture = picture;
+        this.iduser = iduser;
         this.verified = verified;
     }
 
-    public Kitchen(int id, String username, String password, int role, String name, String address, String description, String picture, boolean verified) {
+    public Kitchen(int id, String username, String password, int role, String name, String address, String description, String picture, int iduser, boolean verified) {
         super(id, username, password, role);
         this.name = name;
         this.address = address;
         this.description = description;
         this.picture = picture;
+        this.iduser = iduser;
         this.verified = verified;
         super.setRole(2);
     }
 
     public Kitchen() {
 
+    }
+
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
     }
 
     public String getName() {

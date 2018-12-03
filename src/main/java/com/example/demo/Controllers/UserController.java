@@ -26,7 +26,9 @@ public class UserController {
     //Current User logged in
     private User currentUser = new User();
 
-//RETURN STRINGS
+    private Kitchen currentKitchen = new Kitchen();
+
+    //RETURN STRINGS
     private final String REDIRECT = "redirect:/";
     private final String INDEX = "index";
     private final String LOGIN = "login";
@@ -50,12 +52,19 @@ public class UserController {
     private final String EVENT_KITCHEN = "kitchen/event_kitchen";
     private final String JUDGE_KITCHEN = "kitchen/judge_kitchen";
     private final String KITCHEN_KITCHEN = "kitchen/kitchen_kitchen";
+    private final String ACCEPT_KITCHEN = "kitchen/accept_kitchen";
 
     //JUDGE
     private final String INDEX_JUDGE = "judge/index_judge";
     private final String EVENT_JUDGE = "judge/event_judge";
     private final String JUDGE_JUDGE = "judge/judge_judge";
     private final String KITCHEN_JUDGE = "judge/kitchen_judge";
+
+    //USER
+    private final String INDEX_USER = "user/index_user";
+    private final String EVENT_USER = "user/event_user";
+    private final String JUDGE_USER = "user/judge_user";
+    private final String KITCHEN_USER = "user/kitchen_user";
 
 
     //INDEX
@@ -106,6 +115,9 @@ public class UserController {
             } else if (currentUser.getRole() == 3) {
 
                 return REDIRECT + INDEX_JUDGE;
+            }else if (currentUser.getRole() == 4){
+
+                 return REDIRECT + INDEX_USER;
             }else {
 
                 redirAttr.addFlashAttribute("loginError", true);
@@ -118,6 +130,15 @@ public class UserController {
 
             return REDIRECT + LOGIN;
         }
+    }
+
+//LOGOUT
+
+    @GetMapping("/logout")
+    public String logout(Model model){
+        currentUser = new User();
+
+        return REDIRECT + LOGIN;
     }
 
 //EVENT
@@ -223,6 +244,8 @@ public class UserController {
         return LOGIN;
     }
 
+//VERIFY
+
     @GetMapping("/admin/verify")
     public String verify(Model model){
         log.info("Verify action called...");
@@ -247,7 +270,7 @@ public class UserController {
 
             model.addAttribute("username", currentUser.getUsername());
 
-            return REDIRECT + VERIFY;
+            return VERIFY;
         }
         return LOGIN;
     }
@@ -270,7 +293,7 @@ public class UserController {
     public String eventKitchen(Model model) {
         log.info("See eventKitchen action called..");
 
-        if(currentUser.getRole() == 2) { //checks if an kitchen is logged in
+        if(currentUser.getRole() == 2 || currentUser.getRole() == 4) { //checks if an kitchen is logged in
             List<Kitchen> k = userService.getKitchens();
             model.addAttribute("kitchens", k);
 
@@ -311,23 +334,64 @@ public class UserController {
         return LOGIN;
     }
 
-    //KITCHEN FORM
+//KITCHEN FORM
+
     @GetMapping("/kitchen/kitchen_form")
     public String kitchenForm(Model model){
+        log.info("AddKitchen action called...");
+        if(currentUser.getRole() == 4) {
+            model.addAttribute("kitchen", new Kitchen());
 
-        return KITCHEN_FORM;
+            return KITCHEN_FORM;
+        } else if (currentUser.getRole() == 2){
+
+            return INDEX_KITCHEN;
+        } else if (currentUser.getRole() == 3){
+
+            return INDEX_JUDGE;
+        }
+        return LOGIN;
+    }
+
+    @PostMapping("/kitchen/kitchen_form")
+    public String kitchenForm(@ModelAttribute Kitchen kitchen, Model model){
+
+        if(currentUser.getRole() == 4) {
+            kitchen.setIduser(currentUser.getId());
+
+            userService.addKitchen(kitchen);
+            model.addAttribute("kitchens", userService.getKitchens());
+
+            currentKitchen = kitchen;
+
+            return ACCEPT_KITCHEN;
+        }
+        return LOGIN;
+    }
+
+    @PostMapping("/kitchen/accept_kitchen")
+    public String kitchenAccept(Model model){
+        if(currentUser.getRole() == 4){
+
+            userService.addKitchenToEvent(currentKitchen.getId());
+
+            return ACCEPT_KITCHEN;
+        }
+        return LOGIN;
     }
 
 //JUDGE
 
     @GetMapping("/judge/index_judge")
     public String indexJudge(Model model){
+        if(currentUser.getRole() == 3) {
+            model.addAttribute("events", userService.getEvents());
 
-        model.addAttribute("events", userService.getEvents());
+            model.addAttribute("username", currentUser.getUsername());
 
-        model.addAttribute("username", currentUser.getUsername());
-
-        return INDEX_JUDGE;
+            return INDEX_JUDGE;
+        }
+        return LOGIN;
     }
 
     @GetMapping("/judge/event_judge")
@@ -375,13 +439,97 @@ public class UserController {
         return LOGIN;
     }
 
-    //JUDGE FORM
+//JUDGE FORM
     @GetMapping("/judge/judge_form")
     public String judgeForm(Model model){
 
-        return JUDGE_FORM;
+        if(currentUser.getRole() == 4) {
+            model.addAttribute("judge", new Judge());
+
+            return JUDGE_FORM;
+        } else if (currentUser.getRole() == 2){
+
+            return INDEX_KITCHEN;
+        } else if (currentUser.getRole() == 3){
+
+            return INDEX_JUDGE;
+        }
+        return LOGIN;
     }
 
+    @PutMapping("/judge/judge_form")
+    public String judgeForm(@ModelAttribute Judge judge, Model model){
+
+
+        judge.setIduser(currentUser.getId());
+
+        userService.addJudge(judge);
+        model.addAttribute("kitchens", userService.getKitchens());
+
+        userService.addKitchenToEvent(judge.getId());
+
+        return INDEX_USER;
+
+    }
+
+//USER
+
+    @GetMapping("/user/index_user")
+    public String indexUser(Model model){
+        if(currentUser.getRole() == 4) {
+            model.addAttribute("events", userService.getEvents());
+
+            model.addAttribute("username", currentUser.getUsername());
+
+            return INDEX_USER;
+        }
+        return LOGIN;
+    }
+
+    @GetMapping("/user/event_user")
+    public String eventUser(Model model) {
+        log.info("See eventJudge action called..");
+
+        if(currentUser.getRole() == 4) { //checks if an judge is logged in
+            List<Kitchen> k = userService.getKitchens();
+            model.addAttribute("kitchens", k);
+
+            List<Judge> j = userService.getJudges();
+            model.addAttribute("judges", j);
+
+            List<Event> e = userService.getEvents();
+            model.addAttribute("events", e);
+
+            model.addAttribute("username", currentUser.getUsername());
+
+            return EVENT_USER;
+        }
+        return LOGIN;
+    }
+
+    @GetMapping("/user/kitchen_user/{id}")
+    public String readKitchenUser(@PathVariable("id") int id, Model model) {
+        log.info("Read kitchen with id: " + id);
+
+        if(currentUser.getRole() == 4) {
+            model.addAttribute("kitchen", userService.readKitchen(id));
+
+            return KITCHEN_USER;
+        }
+        return LOGIN;
+    }
+
+    @GetMapping("/user/judge_user/{id}")
+    public String readJudgeUser(@PathVariable("id") int id, Model model) {
+        log.info("Read judge with id: " + id);
+
+        if(currentUser.getRole() == 4) {
+            model.addAttribute("judge", userService.readJudge(id));
+
+            return JUDGE_USER;
+        }
+        return LOGIN;
+    }
 
 //LOGIN STATUS
     public void loginStatus(Model model) {
@@ -394,6 +542,9 @@ public class UserController {
             model.addAttribute("isLoggedin", true);
             model.addAttribute("username", currentUser.getUsername());
         } else if (currentUser.getRole() == 3) {
+            model.addAttribute("isLoggedin", true);
+            model.addAttribute("username", currentUser.getUsername());
+        } else if (currentUser.getRole() == 4){
             model.addAttribute("isLoggedin", true);
             model.addAttribute("username", currentUser.getUsername());
         }

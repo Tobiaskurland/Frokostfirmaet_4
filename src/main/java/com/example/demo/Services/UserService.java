@@ -24,6 +24,7 @@ public interface UserService {
     Kitchen readKitchen(int id);
     Kitchen editKitchen(int id, Kitchen kitchen);
     boolean deleteKitchen(int id);
+    void addKitchenToEvent(int id);
 
     //JUDGE
     List<Judge> getJudges();

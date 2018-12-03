@@ -82,7 +82,12 @@ public class UserServiceImpl implements UserService{
         return userRepo.deleteKitchen(id);
     }
 
-//JUDGES
+    @Override
+    public void addKitchenToEvent(int id) {
+        userRepo.addKitchenToEvent(id);
+    }
+
+    //JUDGES
 
     @Override
     public List<Judge> getJudges() {

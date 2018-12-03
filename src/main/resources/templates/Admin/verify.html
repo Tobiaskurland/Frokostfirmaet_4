@@ -20,7 +20,7 @@
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
             <a href="/admin/event_admin" class="w3-bar-item w3-button"><span th:text="${username}"></span></a>
-            <a class="w3-bar-item w3-button" href="/login">Logout</a>
+            <a class="w3-bar-item w3-button" href="/logout">Logout</a>
         </div>
     </div>
 </div>
@@ -45,9 +45,9 @@
                 <td th:unless="${kitchen.verified}">NO</td>
                 <!-- Give the option to verify the kitchen -->
                 <td th:if="not ${kitchen.verified}">
-                <form method="post">
-                    <a type="hidden" class="btn btn-success" name="_method" value="put" th:href="${'admin/verify/' + kitchen.id}">faisal</a>
-                </form>
+                    <a type="hidden" class="btn btn-success" name="_method" value="put" th:href="${'admin/verify/' + kitchen.id}"
+                    style="font-size: 22px">&#9989;</a>
+
                     <a style="font-size: 22px"> &#10060; </a>
                 </td>
             </tr>

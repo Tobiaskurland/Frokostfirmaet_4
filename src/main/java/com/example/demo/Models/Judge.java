@@ -6,29 +6,35 @@ public class Judge extends User{
     private String lastName;
     private String profession;
     private String jobdescription;
+    private int iduser;
     private boolean verified;
 
-    public Judge(String firstName, String lastName, String profession, String jobdescription, boolean verified) {
+    public Judge(String firstName, String lastName, String profession, String jobdescription, int iduser, boolean verified) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.profession = profession;
         this.jobdescription = jobdescription;
+        this.iduser = iduser;
         this.verified = verified;
     }
 
-    public Judge(int id, String username, String password, int role, String firstName, String lastName, String profession, String jobdescription, boolean verified) {
+    public Judge(int id, String username, String password, int role, String firstName, String lastName, String profession, String jobdescription, int iduser, boolean verified) {
         super(id, username, password, role);
         this.firstName = firstName;
         this.lastName = lastName;
         this.profession = profession;
         this.jobdescription = jobdescription;
         this.verified = verified;
+        this.iduser = iduser;
         super.setRole(3);
     }
+
+
 
     public Judge() {
 
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -40,6 +46,14 @@ public class Judge extends User{
 
     public String getLastName() {
         return lastName;
+    }
+
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
     }
 
     public void setLastName(String lastName) {
