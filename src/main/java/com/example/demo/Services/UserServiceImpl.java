@@ -148,11 +148,13 @@ public class UserServiceImpl implements UserService{
     public boolean signUpMatch(User user){
         boolean signUpMatch;
 
-        if(user.getUsername() != null && user.getPassword() != null){
-            signUpMatch = true;
+        User loginUser = userRepo.findLogin(user.getUsername(),user.getPassword());
+
+        if(user.getUsername().equals("") || user.getPassword().equals("") || loginUser.getUsername() != null || loginUser.getPassword() != null){
+            signUpMatch = false;
         }
         else{
-            signUpMatch = false;
+            signUpMatch = true;
         }
 
         return signUpMatch;

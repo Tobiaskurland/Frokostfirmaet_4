@@ -169,7 +169,8 @@ public class UserController {
 
             redirAttr.addFlashAttribute("loginError", true);
             log.info("User failed to create...");
-            return SIGNUP;
+
+            return REDIRECT + SIGNUP;
         }
             return REDIRECT;
     }
